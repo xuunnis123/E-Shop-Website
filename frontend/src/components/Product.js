@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import Rating from './Rating'
 function Product({ product }) {
     return (
        <Card className="my-3 p-3 rounded">
@@ -16,13 +17,10 @@ function Product({ product }) {
                 </a>
                 <Card.Text as="div">
                     <div className="my-3">
-                        評價：{product.rating} / 5
                         
+                        <Rating value={ product.rating } text={`人氣：${product.numReviews}`} color={'#f8e825'}/>
                     </div>
-                    <div className="my-3">
-                        
-                        人氣：{product.numReviews} 
-                    </div>
+                    
                 </Card.Text>
                 <Card.Text as="h3">
                     NTD ${product.price}
