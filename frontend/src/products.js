@@ -34,7 +34,7 @@ const products = [
     'brand': 'Happy Camels',
     'category': 'Tourism',
     'price': 17900,
-    'countInStock': 5,
+    'countInStock': 0,
     'rating': 3,
     'numReviews': 112,
   },
