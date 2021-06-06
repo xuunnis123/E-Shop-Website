@@ -1,2 +1,4 @@
 
 resources/.DS_Store
+*.pyc
+backend/db.sqlite3
