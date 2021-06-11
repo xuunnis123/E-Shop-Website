@@ -2,3 +2,4 @@
 resources/.DS_Store
 *.pyc
 backend/db.sqlite3
+backend/static/images/pexels-janko-ferlic-1083502.jpg
