@@ -68,7 +68,8 @@ function LoginScreen({location, history}) {
                 <Col>
                     還沒加入會員？ <Link 
                     to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                        註冊</Link>
+                        註冊
+                    </Link>
                 </Col>
             </Row>
         </FormContainer>
