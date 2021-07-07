@@ -30,6 +30,7 @@ export const googleLogin = async (accesstoken) => {
       }
     );
     console.log(res);
+    localStorage.setItem('google_accesstoken',JSON.stringify(accesstoken))
     return await res.status;
   };
 

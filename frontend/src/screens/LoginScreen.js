@@ -30,6 +30,10 @@ function LoginScreen({location, history}) {
         e.preventDefault()
         dispatch(login(email,password))
     }
+    const loginByGoogle = (e)=>{
+        e.preventDefault()
+        dispatch(googleLogin(email,password))
+    }
     return (
         <FormContainer>
             <h1>登入</h1>
@@ -64,7 +68,9 @@ function LoginScreen({location, history}) {
                     登入
                 </Button>
             </Form>
-            <GoogleSocialAuth/>
+
+            <GoogleSocialAuth onClick={loginByGoogle}/>
+
             <Row className='py-3'>
                 <Col>
                     還沒加入會員？ <Link 
