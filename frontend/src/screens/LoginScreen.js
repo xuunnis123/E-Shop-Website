@@ -4,9 +4,10 @@ import { Form, Button, Row, Col} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import GoogleSocialAuth from '../components/GoogleSocialAuth'
 import FormContainer from '../components/FormContainer'
 
-import {login } from '../actions/userActions'
+import {login,googleLogin } from '../actions/userActions'
 
 function LoginScreen({location, history}) {
     const [email, setEmail] = useState('')
@@ -63,7 +64,7 @@ function LoginScreen({location, history}) {
                     登入
                 </Button>
             </Form>
-
+            <GoogleSocialAuth/>
             <Row className='py-3'>
                 <Col>
                     還沒加入會員？ <Link 

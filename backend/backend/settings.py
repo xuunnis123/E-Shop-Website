@@ -40,10 +40,21 @@ INSTALLED_APPS = [
     
     'base.apps.BaseConfig',
 
+    #django rest framework
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+
     'corsheaders',
 
-
+    #for social login
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
 
 REST_FRAMEWORK = {
@@ -51,6 +62,13 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+SOCIAL_GOOGLE_CLIENT_ID = '767817704623-o0plq03jna3d56rg4l362ticv6e785fd.apps.googleusercontent.com'
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
 
 from datetime import timedelta
 
@@ -173,3 +191,10 @@ STATICFILES_DIRS=[
 MEDIA_ROOT = 'static/images'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
