@@ -4,10 +4,30 @@ import { Form, Button, Row, Col} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import GoogleSocialAuth from '../components/GoogleSocialAuth'
 import FormContainer from '../components/FormContainer'
+import { GoogleLogin } from 'react-google-login';
+import {login } from '../actions/userActions'
 
-import {login,googleLogin } from '../actions/userActions'
+const responseGoogle = (response) => {
+    console.log(response);
+    localStorage.setItem('userFromGoogle', JSON.stringify(response))
+  }
+  
+const handleLogin = async googleData => {
+    const res = await fetch("/api/v1/auth/google", {
+        method: "POST",
+        body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    // store returned user somehow
+  }
+    
+   
 
 function LoginScreen({location, history}) {
     const [email, setEmail] = useState('')
@@ -30,10 +50,7 @@ function LoginScreen({location, history}) {
         e.preventDefault()
         dispatch(login(email,password))
     }
-    const loginByGoogle = (e)=>{
-        console.log("login")
-        dispatch(loginByGoogle())
-    }
+    
     return (
         <FormContainer>
             <h1>登入</h1>
@@ -68,8 +85,15 @@ function LoginScreen({location, history}) {
                     登入
                 </Button>
             </Form>
-
-            <GoogleSocialAuth onChange={loginByGoogle}/>
+            <br/>
+            <GoogleLogin
+      clientId="767817704623-o0plq03jna3d56rg4l362ticv6e785fd.apps.googleusercontent.com"
+      buttonText="使用 GOOGLE 登入"
+      onSuccess={handleLogin}
+      onFailure={responseGoogle}
+      cookiePolicy={'single_host_origin'}
+    />
+            
 
             <Row className='py-3'>
                 <Col>
