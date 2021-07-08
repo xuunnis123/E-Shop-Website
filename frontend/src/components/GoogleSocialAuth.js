@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { googleLogin } from '../actions/userActions';
 
 const CLIENT_ID = '767817704623-o0plq03jna3d56rg4l362ticv6e785fd.apps.googleusercontent.com';
 class GoogleSocialAuth extends Component {
@@ -42,25 +43,23 @@ class GoogleSocialAuth extends Component {
    }
  
    render() {
+
+    const responseGoogle = async(response) => {
+        let googleResponse  = await googleLogin(response.accessToken)
+        console.log(googleResponse);
+        console.log(response);
+      }
      return (
      <div>
-       { this.state.isLogined ?
-         <GoogleLogout
-           clientId={ CLIENT_ID }
-           buttonText='Logout'
-           onLogoutSuccess={ this.logout }
-           onFailure={ this.handleLogoutFailure }
-         >
-         </GoogleLogout>: <GoogleLogin
-           clientId={ CLIENT_ID }
-           buttonText='Login'
-           onSuccess={ this.login }
-           onFailure={ this.handleLoginFailure }
-           cookiePolicy={ 'single_host_origin' }
-           responseType='code,token'
-         />
-       }
-       { this.state.accessToken ? <h5>Your Access Token: <br/><br/> { this.state.accessToken }</h5> : null }
+       
+          <GoogleLogin
+          clientId = {CLIENT_ID}
+          buttonText="LOGIN WITH GOOGLE"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+        />
+       
+      
        
      </div>
      

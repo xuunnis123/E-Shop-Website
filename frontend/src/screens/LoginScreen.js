@@ -31,8 +31,8 @@ function LoginScreen({location, history}) {
         dispatch(login(email,password))
     }
     const loginByGoogle = (e)=>{
-        e.preventDefault()
-        dispatch(googleLogin(email,password))
+        console.log("login")
+        dispatch(loginByGoogle())
     }
     return (
         <FormContainer>
@@ -69,7 +69,7 @@ function LoginScreen({location, history}) {
                 </Button>
             </Form>
 
-            <GoogleSocialAuth onClick={loginByGoogle}/>
+            <GoogleSocialAuth onChange={loginByGoogle}/>
 
             <Row className='py-3'>
                 <Col>

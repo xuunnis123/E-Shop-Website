@@ -1,8 +1,7 @@
 from django.urls import path
 from base.views import user_views as views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-)
+from rest_framework_simplejwt import views as jwt_views
+#from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns =[
     path('login/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -14,7 +13,9 @@ urlpatterns =[
     path('', views.getUsers, name="users"),
    
     path('rest-auth/facebook/', views.FacebookLogin.as_view(), name='fb_login'),
-    path('rest-auth/google/', views.GoogleLogin.as_view(), name='google_login')
-
+    path('rest-auth/google/', views.GoogleLogin.as_view(), name='google_login'),
+    
+    path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
+    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
 
 ]

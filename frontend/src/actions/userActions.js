@@ -23,14 +23,16 @@ import {
 } from '../constants/userConstants'
 
 export const googleLogin = async (accesstoken) => {
+    
     let res = await axios.post(
       "http://localhost:8000/api/users/rest-auth/google/",
       {
         access_token: accesstoken,
       }
+      
     );
     console.log(res);
-    localStorage.setItem('google_accesstoken',JSON.stringify(accesstoken))
+    
     return await res.status;
   };
 
