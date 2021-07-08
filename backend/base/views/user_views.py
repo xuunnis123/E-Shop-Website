@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
@@ -17,10 +17,16 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 
 
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from ..serializers import MyTokenObtainPairSerializer
+from ..serializers import MyTokenObtainPairSerializer, SocialLoginSerializer
 
-
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -90,5 +96,14 @@ def getUsers(request):
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
+class GoogleLogin(TokenObtainPairView):
+    permission_classes = (AllowAny, ) # AllowAny for login
+    serializer_class = SocialLoginSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.save()
+            return Response(get_tokens_for_user(user))
+        else:
+            raise ValueError('Not serializable')

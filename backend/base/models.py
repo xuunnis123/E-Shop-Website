@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
-
+class SocialAccount(models.Model):
+    provider = models.CharField(max_length=200, default='google') # 若未來新增其他的登入方式,如Facebook,GitHub...
+    unique_id = models.CharField(max_length=200)
+    user = models.ForeignKey(
+        User, related_name='social', on_delete=models.CASCADE)
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)

@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React,{ useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col} from 'react-bootstrap'
@@ -7,13 +8,35 @@ import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { GoogleLogin } from 'react-google-login';
 import {login } from '../actions/userActions'
-
+import {authByGoogle } from '../actions/googleActions'
 const responseGoogle = (response) => {
     console.log(response);
-    localStorage.setItem('userFromGoogle', JSON.stringify(response))
+    axios
+      .post("http://localhost:8000/api/users/token/obtain/", {
+          
+        token: response.tokenId,
+      })
+      .then((res) => {
+        console.log(res.data);
+        // 拿到的 token 存在 localStorage
+        localStorage.setItem("access_token", res.data.access);
+        localStorage.setItem("refresh_token", res.data.refresh);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   
+  export const fetchData = (dispatch) => {
+    const token = localStorage.getItem("access_token");
+    authByGoogle.get("/todos/").then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  
 const handleLogin = async googleData => {
+    /*
     const res = await fetch("/api/v1/auth/google", {
         method: "POST",
         body: JSON.stringify({
@@ -23,8 +46,13 @@ const handleLogin = async googleData => {
         "Content-Type": "application/json"
       }
     })
+    
     const data = await res.json()
+    */
     // store returned user somehow
+    console.log(googleData.tokenId);
+    console.log(googleData.getName);
+    localStorage.setItem('userFromGoogle', JSON.stringify(googleData.tokenId))
   }
     
    
@@ -89,7 +117,7 @@ function LoginScreen({location, history}) {
             <GoogleLogin
       clientId="767817704623-o0plq03jna3d56rg4l362ticv6e785fd.apps.googleusercontent.com"
       buttonText="使用 GOOGLE 登入"
-      onSuccess={handleLogin}
+      onSuccess={responseGoogle}
       onFailure={responseGoogle}
       cookiePolicy={'single_host_origin'}
     />
