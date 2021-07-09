@@ -17,10 +17,12 @@ const responseGoogle = (response) => {
         token: response.tokenId,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("res.data=",res.data);
         // 拿到的 token 存在 localStorage
         localStorage.setItem("access_token", res.data.access);
         localStorage.setItem("refresh_token", res.data.refresh);
+        localStorage.setItem("givenName",response.profileObj.name);
+        
       })
       .catch((err) => {
         console.log(err);

@@ -2,17 +2,25 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navbar, Nav,  Container, Row ,NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import { logout } from '../actions/userActions'
+import { logout,logoutByGoogle } from '../actions/userActions'
+import { GoogleLogout } from 'react-google-login';
 function Header() {
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
+    
 
     const dispatch = useDispatch()
 
     const logoutHandler = () =>{
         dispatch(logout())
     }
+
+    const logoutfromGoogle = () => {
+        dispatch(logoutByGoogle())
+        
+     }
     return (
         <header>
             <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
@@ -23,6 +31,7 @@ function Header() {
                         <Navbar.Brand>Ezra's Web</Navbar.Brand>
 
                     </LinkContainer>
+                    
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
@@ -48,7 +57,13 @@ function Header() {
                             </LinkContainer>
                             )}
 
-                            
+                            <GoogleLogout
+                            clientId="767817704623-o0plq03jna3d56rg4l362ticv6e785fd.apps.googleusercontent.com"
+                            buttonText="登出"
+                            onLogoutSuccess={logoutfromGoogle}
+                            >
+                            </GoogleLogout>
+
                         </Nav>
                         
                     </Navbar.Collapse>

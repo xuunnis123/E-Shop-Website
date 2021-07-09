@@ -66,7 +66,14 @@ export const logout = ()=>(dispatch)=>{
     dispatch({type:USER_DETAILS_RESET})
     
 }
+export const logoutByGoogle =()=>(dispatch)=>{
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("refresh_token")
+    localStorage.removeItem("givenName")
+    dispatch({type:USER_LOGOUT})
+    dispatch({type:USER_DETAILS_RESET})
 
+}
 export const register = (name, email, password) => async(dispatch) =>{
     try{
         dispatch({
