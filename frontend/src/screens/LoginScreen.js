@@ -37,25 +37,7 @@ const responseGoogle = (response) => {
   };
 
   
-const handleLogin = async googleData => {
-    /*
-    const res = await fetch("/api/v1/auth/google", {
-        method: "POST",
-        body: JSON.stringify({
-        token: googleData.tokenId
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    
-    const data = await res.json()
-    */
-    // store returned user somehow
-    console.log(googleData.tokenId);
-    console.log(googleData.getName);
-    localStorage.setItem('userFromGoogle', JSON.stringify(googleData.tokenId))
-  }
+
     
    
 
