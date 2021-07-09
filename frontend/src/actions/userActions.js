@@ -72,7 +72,7 @@ export const logoutByGoogle =()=>(dispatch)=>{
     localStorage.removeItem("givenName")
     dispatch({type:USER_LOGOUT})
     dispatch({type:USER_DETAILS_RESET})
-
+    window.location.href="/";
 }
 export const register = (name, email, password) => async(dispatch) =>{
     try{

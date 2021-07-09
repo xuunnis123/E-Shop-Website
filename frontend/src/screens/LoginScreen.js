@@ -21,7 +21,7 @@ const responseGoogle = (response) => {
         // 拿到的 token 存在 localStorage
         localStorage.setItem("access_token", res.data.access);
         localStorage.setItem("refresh_token", res.data.refresh);
-        localStorage.setItem("givenName",response.profileObj.name);
+        localStorage.setItem("givenName",JSON.stringify(response.profileObj.name));
         
       })
       .catch((err) => {

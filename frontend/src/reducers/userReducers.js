@@ -3,7 +3,12 @@ import {
     USER_LOGIN_SUCCESS, 
     USER_LOGIN_FAIL,
 
+    USER_LOGIN_GOOGLE_REQUEST,
+    USER_LOGIN_GOOGLE_SUCCESS,
+    USER_LOGIN_GOOGLE_FAIL,
+
     USER_LOGOUT,
+    USER_LOGIN_GOOGLE_LOGOUT,
 
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS, 
@@ -21,6 +26,26 @@ import {
     
 
 } from '../constants/userConstants'
+
+export const userLoginGoogleReducers = ( state = {  }, action) =>{
+    switch(action.type){
+        case USER_LOGIN_GOOGLE_REQUEST:
+            return { loading : true }
+        
+        case USER_LOGIN_GOOGLE_SUCCESS:
+            return { loading : false, userInfo: action.payload }
+
+        case USER_LOGIN_GOOGLE_FAIL:
+            return { loading : false, error: action.payload }
+
+        case USER_LOGIN_GOOGLE_LOGOUT:
+            return { }
+
+        default:
+            return state    
+    }
+
+}
 
 export const userLoginReducers = ( state = {  }, action) =>{
     switch(action.type){
