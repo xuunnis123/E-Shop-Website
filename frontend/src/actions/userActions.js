@@ -70,6 +70,7 @@ export const logoutByGoogle =()=>(dispatch)=>{
     localStorage.removeItem("access_token")
     localStorage.removeItem("refresh_token")
     localStorage.removeItem("givenName")
+    localStorage.removeItem("userInfo")
     dispatch({type:USER_LOGOUT})
     dispatch({type:USER_DETAILS_RESET})
     window.location.href="/";

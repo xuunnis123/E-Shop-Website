@@ -9,26 +9,12 @@ import FormContainer from '../components/FormContainer'
 import { GoogleLogin } from 'react-google-login';
 import {login } from '../actions/userActions'
 import {authByGoogle } from '../actions/googleActions'
-const responseGoogle = (response) => {
-    console.log(response);
-    axios
-      .post("http://localhost:8000/api/users/token/obtain/", {
-          
-        token: response.tokenId,
-      })
-      .then((res) => {
-        console.log("res.data=",res.data);
-        // 拿到的 token 存在 localStorage
-        localStorage.setItem("access_token", res.data.access);
-        localStorage.setItem("refresh_token", res.data.refresh);
-        localStorage.setItem("givenName",JSON.stringify(response.profileObj.name));
-        
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+
   
+
+
+
+
   export const fetchData = (dispatch) => {
     const token = localStorage.getItem("access_token");
     authByGoogle.get("/todos/").then((res) => {
@@ -37,7 +23,26 @@ const responseGoogle = (response) => {
   };
 
   
-
+ const responseGoogle = (response) => {
+        console.log(response);
+        axios
+          .post("http://localhost:8000/api/users/token/obtain/", {
+              
+            token: response.tokenId,
+          })
+          .then((res) => {
+            console.log("res.data=",res.data);
+            // 拿到的 token 存在 localStorage
+            localStorage.setItem("access_token", res.data.access);
+            localStorage.setItem("refresh_token", res.data.refresh);
+            localStorage.setItem("givenName",JSON.stringify(response.profileObj.name));
+            localStorage.setItem('userInfo',JSON.stringify(res.data));
+            window.location.href="/shipping";
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     
    
 
