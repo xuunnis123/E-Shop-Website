@@ -16,7 +16,7 @@ from datetime import datetime
 def addOrderItems(request):
     user = request.user
     data = request.data
-
+    print(data)
     orderItems = data['orderItems']
 
     if orderItems and len(orderItems) == 0:
@@ -62,4 +62,12 @@ def addOrderItems(request):
             product.save()
 
         serializer = OrderSerializer(order, many=False)
+        print("serializer:",serializer)
         return Response(serializer.data)
+    
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getOrders(request):
+    orders = Order.objects.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)

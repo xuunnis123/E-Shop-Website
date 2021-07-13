@@ -10,8 +10,8 @@ import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 function PlaceOrderScreen({ history }) {
 
     const orderCreate = useSelector(state => state.orderCreate)
-    //const { order, error, success } = orderCreate
-    const error =null
+    const { order, error, success } = orderCreate
+    
     const dispatch = useDispatch()
 
     const cart = useSelector(state => state.cart)
@@ -26,17 +26,17 @@ function PlaceOrderScreen({ history }) {
     if (!cart.paymentMethod) {
         history.push('/payment')
     }
-/*
+
     useEffect(() => {
         if (success) {
             history.push(`/order/${order._id}`)
             dispatch({ type: ORDER_CREATE_RESET })
         }
     }, [success, history])
-*/
+
     const placeOrder = () => {
         console.log("into")
-        /*
+        
         dispatch(createOrder({
             orderItems: cart.cartItems,
             shippingAddress: cart.shippingAddress,
@@ -46,7 +46,7 @@ function PlaceOrderScreen({ history }) {
             taxPrice: cart.taxPrice,
             totalPrice: cart.totalPrice,
         }))
-        */
+        
     }
 
     return (
